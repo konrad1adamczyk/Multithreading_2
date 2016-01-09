@@ -18,7 +18,8 @@ import org.junit.Test;
 
 public class AtomicCounterTutor {
     final int ITERATIONS = 1000000;
-    int counter=0;
+    AtomicInteger counter = new AtomicInteger();
+
 
     class TestThread implements Runnable {
         String threadName;
@@ -29,14 +30,17 @@ public class AtomicCounterTutor {
 
         @Override
         public void run() {
+            counter.getAndSet(0);
             for (int i=0;i<ITERATIONS;i++) {
-                counter++;
+                counter.getAndIncrement();
             }
         }
     }
 
     @Test
     public void testThread() {
+//        counter.getAndSet(0);
+//        System.out.println(counter);
         List<Thread> threads = new ArrayList<Thread>();
         for (int i=0;i<100;i++) {
             threads.add(new Thread(new TestThread("t"+i)));
@@ -53,8 +57,11 @@ public class AtomicCounterTutor {
             e.printStackTrace();
         }
         System.out.println("Counter="+counter);
-
-        assertTrue(counter==ITERATIONS*100);
+//        counter.getAndSet(ITERATIONS*100);
+//        counter.compareAndSet(counter.get(),ITERATIONS*100);
+//        counter.getAndSet(0);
+        assertTrue(counter.compareAndSet(counter.get(),ITERATIONS*100));
+//        assertTrue(counter==ITERATIONS*100);
     }
 
 }

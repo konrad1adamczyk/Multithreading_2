@@ -72,21 +72,21 @@ public class ExecutorServiceTutor {
         long start = new Date().getTime();
 
         List<Thread> threads = new ArrayList<Thread>();
-        for (int i=0;i<10;i++) {
+        for (int i=0;i<100;i++) {
             threads.add(new Thread(new TestThread("t"+i)));
         }
 
-        ExecutorService executorService = Executors.newSingleThreadExecutor();
-        //ExecutorService executorService = Executors.newFixedThreadPool(10);
-        //ExecutorService executorService = Executors.newCachedThreadPool();
+//        ExecutorService executorService = Executors.newSingleThreadExecutor();
+        ExecutorService executorService = Executors.newFixedThreadPool(10);
+//        ExecutorService executorService = Executors.newCachedThreadPool();
         for (int i=0;i<10;i++) {
             executorService.execute(threads.get(i));
         }
 
         executorService.shutdown();
         try {
-            executorService.awaitTermination(1, TimeUnit.SECONDS);
-            //executorService.awaitTermination(1, TimeUnit.MILLISECONDS);
+//            executorService.awaitTermination(1, TimeUnit.SECONDS);
+            executorService.awaitTermination(1, TimeUnit.MILLISECONDS);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }

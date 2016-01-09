@@ -10,6 +10,8 @@
 
 
 import java.util.*;
+import java.util.concurrent.CopyOnWriteArrayList;
+
 import org.junit.Test;
 import static org.junit.Assert.*;
 
@@ -31,8 +33,7 @@ public class SynchronizedListTutor2 {
             "Elephant", "Rabbit", "Snake", "Chicken",
             "Horse", "Human" };
 
-    List<String> randomAnimals =
-            Collections.synchronizedList(new ArrayList<String>());
+    List<String> randomAnimals = Collections.synchronizedList(new ArrayList<String>());
 
     public String getRandomAnimal() {
         int index = (int)(Math.random()*animals.length);
@@ -50,8 +51,10 @@ public class SynchronizedListTutor2 {
         public void run() {
             try {
                 for (int i=0;i<20;i++) {
+
                     randomAnimals.add(getRandomAnimal());
-                    print(randomAnimals);
+//                    print(randomAnimals);
+                    print(new CopyOnWriteArrayList(randomAnimals));   //****************************************
                 }
             } catch(Exception e) {
                 err(e.getClass().getName());
@@ -67,7 +70,7 @@ public class SynchronizedListTutor2 {
             builder.append(" ");
         }
         // You can uncomment this if you would like to see lists
-        //log(builder.toString());
+        log(builder.toString());
     }
 
     @Test

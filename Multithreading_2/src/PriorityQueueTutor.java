@@ -1,7 +1,3 @@
-/**
- Implement compareTo() in order. Print orders in ReadOrderThread so that order with priority==true was the first.
- */
-
 import java.util.concurrent.PriorityBlockingQueue;
 
 import org.junit.Assert;
@@ -15,6 +11,7 @@ public class PriorityQueueTutor {
 
     class Order implements Comparable<Order> {
         public String title;
+//        public boolean priority;
         public boolean priority;
 
         @Override
@@ -30,7 +27,20 @@ public class PriorityQueueTutor {
 
         @Override
         public int compareTo(Order o) {
-            return 0;
+
+//            chuj wie co tu nie dziala i czemu tego nie porownuje
+
+            Boolean prawdaCzyFalsz = o.priority;
+            if (prawdaCzyFalsz == true){
+                return 1;
+            }
+            else if (prawdaCzyFalsz ==false){
+                return -1;
+            }
+            else {
+                return 0;
+            }
+
         }
 
     }

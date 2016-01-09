@@ -33,9 +33,9 @@ public class ReadWriteLockTutor {
 
     class WritingThread implements Runnable {
         String threadName;
-        Lock lock;
+        ReentrantReadWriteLock lock;
 
-        public WritingThread(String threadName, Lock lock) {
+        public WritingThread(String threadName, ReentrantReadWriteLock lock) {
             this.threadName = threadName;
             this.lock = lock;
         }
@@ -43,13 +43,13 @@ public class ReadWriteLockTutor {
         @Override
         public void run() {
             for (int i = 0; i < ITERATIONS; i++) {
-                lock.lock();
+//                lock.lock();
                 stringBuilder.append(threadName);
                 Thread.yield();
                 stringBuilder.append(threadName);
                 Thread.yield();
                 stringBuilder.append(",");
-                lock.unlock();
+//                lock.unlock();
                 Thread.yield();
             }
         }
@@ -57,9 +57,9 @@ public class ReadWriteLockTutor {
 
     class ReadingThread implements Runnable {
         String threadName;
-        Lock lock;
+        ReentrantReadWriteLock lock;
 
-        public ReadingThread(String threadName, Lock lock) {
+        public ReadingThread(String threadName, ReentrantReadWriteLock lock) {
             this.threadName = threadName;
             this.lock = lock;
         }
@@ -67,7 +67,7 @@ public class ReadWriteLockTutor {
         @Override
         public void run() {
             for (int i = 0; i < 5; i++) {
-                lock.lock();
+//                lock.lock();
                 //log(threadName+" is locked");
                 String s = stringBuilder.toString();
                 int len = s.length();
@@ -81,7 +81,7 @@ public class ReadWriteLockTutor {
                     e.printStackTrace();
                 }
                 Thread.yield();
-                lock.unlock();
+//                lock.unlock();
             }
         }
     }
@@ -95,7 +95,8 @@ public class ReadWriteLockTutor {
          * acquire different locks for ReadingThread and WritingThread
          * using lock.readLock() and lock.writeLock()
          */
-        ReentrantLock lock = new ReentrantLock();
+        ReentrantReadWriteLock lock = new ReentrantReadWriteLock();
+//        ReentrantLock lock = new ReentrantLock();
         t1 = new Thread(new WritingThread("1", lock));
         t2 = new Thread(new WritingThread("2", lock));
         t3 = new Thread(new ReadingThread("r1", lock));

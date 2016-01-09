@@ -7,7 +7,7 @@ import org.junit.Test;
 
 public class VolatileTest {
     // Variable running should be volatile
-    boolean running = true;
+    volatile boolean running = true;
 
     static StringBuffer buf = new StringBuffer();
     static void log(String s) {

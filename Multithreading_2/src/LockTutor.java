@@ -69,11 +69,11 @@ public class LockTutor {
                 int len = s.length();
                 int l = len>50?len-50:0;
                 log(len+":"+s.substring(l));
-                try {
-                    Thread.sleep(100);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
+//                try {
+//                    Thread.sleep(100);
+//                } catch (InterruptedException e) {
+//                    e.printStackTrace();
+//                }
                 lock.unlock();
                 Thread.yield();
             }
@@ -83,9 +83,16 @@ public class LockTutor {
     @Test
     public void testThread() {
         long start = new Date().getTime();
-        t1 = new Thread(new WritingThread("1", new ReentrantLock()));
-        t2 = new Thread(new WritingThread("2", new ReentrantLock()));
-        t3 = new Thread(new ReadingThread("3", new ReentrantLock()));
+        Lock lock = new ReentrantLock();
+        t1 = new Thread(new WritingThread("1", lock));
+        t2 = new Thread(new WritingThread("2", lock));
+        t3 = new Thread(new ReadingThread("3", lock));
+
+
+
+//        t1 = new Thread(new WritingThread("1", new ReentrantLock()));
+//        t2 = new Thread(new WritingThread("2", new ReentrantLock()));
+//        t3 = new Thread(new ReadingThread("3", new ReentrantLock()));
         t1.start();
         t2.start();
         t3.start();

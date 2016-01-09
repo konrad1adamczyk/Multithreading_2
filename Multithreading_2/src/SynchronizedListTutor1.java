@@ -17,6 +17,9 @@
 
 
 import java.util.*;
+import java.util.concurrent.CopyOnWriteArrayList;
+import java.util.concurrent.CopyOnWriteArraySet;
+
 import org.junit.Test;
 import static org.junit.Assert.*;
 
@@ -57,7 +60,8 @@ public class SynchronizedListTutor1 {
             try {
                 for (int i=0;i<20;i++) {
                     randomAnimals.add(getRandomAnimal());
-                    print(new ArrayList(randomAnimals));
+
+                    print(new CopyOnWriteArrayList(randomAnimals));
                 }
             } catch(Exception e) {
                 err(e.getClass().getName());
@@ -72,7 +76,8 @@ public class SynchronizedListTutor1 {
             builder.append(iterator.next());
             builder.append(" ");
         }
-        //log(builder.toString());
+        builder.append("\n");
+        log(builder.toString());
     }
 
 
