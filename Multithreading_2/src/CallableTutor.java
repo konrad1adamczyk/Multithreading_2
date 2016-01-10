@@ -44,9 +44,9 @@ public class CallableTutor {
 
         ArrayList<Future<String>> results = new ArrayList<Future<String>>();
 
-        //ExecutorService executorService = Executors.newSingleThreadExecutor();
+//        ExecutorService executorService = Executors.newSingleThreadExecutor();
         ExecutorService executorService = Executors.newFixedThreadPool(10);
-        //ExecutorService executorService = Executors.newCachedThreadPool();
+//        ExecutorService executorService = Executors.newCachedThreadPool();
 
         for (int i=0;i<10;i++) {
             results.add(executorService.submit(new StringGenerator()));
@@ -68,6 +68,8 @@ public class CallableTutor {
                 e.printStackTrace();
             } catch (ExecutionException e) {
                 e.printStackTrace();
+            } catch (CancellationException ce){
+                ce.printStackTrace();
             }
         }
         System.out.println(resultStr);
@@ -78,6 +80,8 @@ public class CallableTutor {
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
+
+//        Thread.sleep(150);
 
         long time =new Date().getTime()-start;
         System.out.println("Time of work:"+time);

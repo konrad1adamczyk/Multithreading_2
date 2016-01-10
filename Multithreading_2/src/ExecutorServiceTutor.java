@@ -86,7 +86,7 @@ public class ExecutorServiceTutor {
         executorService.shutdown();
         try {
 //            executorService.awaitTermination(1, TimeUnit.SECONDS);
-            executorService.awaitTermination(1, TimeUnit.MILLISECONDS);
+            executorService.awaitTermination(100, TimeUnit.MILLISECONDS);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
